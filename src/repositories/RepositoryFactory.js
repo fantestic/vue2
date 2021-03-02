@@ -1,4 +1,4 @@
-import ActionRepository from './test/ActionRepository';
+import ActionRepository from './rest/ActionRepository';
 import CollectionRepository from './test/CollectionRepository';
 
 const repositories = {

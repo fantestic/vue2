@@ -17,7 +17,7 @@ export default {
     },
     async lazyLoadActions({dispatch, state}) {
       if (!state.actionsLoaded) {
-        dispatch('loadActions')
+        await dispatch('loadActions')
       }
     }
   },
