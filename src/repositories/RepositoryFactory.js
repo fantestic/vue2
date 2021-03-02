@@ -1,5 +1,5 @@
 import ActionRepository from './rest/ActionRepository';
-import CollectionRepository from './test/CollectionRepository';
+import CollectionRepository from './rest/CollectionRepository';
 
 const repositories = {
     'action': ActionRepository,
