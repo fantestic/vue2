@@ -90,11 +90,14 @@ export default {
     },
     addStep(action, position = null) {
       const step = {}
-      step.action = action.id
-      step.params = {}
+      
+      step.action = action
       step.uid = _.uniqueId()
+      step.arguments = {}
+      let i = 0
       action.parameters.forEach(param => {
-        step.params[param.name] = {
+        step.arguments[i++] = {
+          param: param,
           dataSource: 'text',
           value: ''
         }

@@ -21,9 +21,9 @@
         >
           <router-link
             :to="{ name: 'ScenarioEdit', params: {scenarioId: props.row.id }}"
-          >{{ makeScenarioReadable(props.row.id) }}</router-link>
+          >{{ makeScenarioReadable(props.row) }}</router-link>
         </b-table-column>
-        <b-table-column
+        <!--<b-table-column
           label="Actions"
           v-slot="props"
         >
@@ -34,7 +34,7 @@
               @click="runScenario(props.row.id)"
             ></b-button>
           </b-tooltip>
-        </b-table-column>
+        </b-table-column>-->
       </b-table>
     </div>
     <b-loading v-model="loading"></b-loading>
@@ -63,8 +63,8 @@ export default {
     makeCollectionReadable(id) {
       return Collection.buildReadableNameFromId(id)
     },
-    makeScenarioReadable(id) {
-      return Scenario.buildReadableNameFromId(id)
+    makeScenarioReadable(row) {
+      return Scenario.buildReadableName(row)
     },
     runScenario(id) {
       console.log(id + ' to open')

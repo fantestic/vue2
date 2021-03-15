@@ -14,7 +14,7 @@ export default {
     return new Promise(function (resolve) {
         axios.get(process.env.VUE_APP_FANTESTIC_API + '/collections/'+collectionId+'/scenarios')
         .then(function (payload) {
-            resolve(Normalizer.extractHydraMember(payload.data));
+            resolve(Normalizer.normalizeScenarioList(payload.data));
         });
     })
   },

@@ -1,12 +1,19 @@
 <template>
   <div class="action">
+            <!--v-model="step.parameters[phrase]['value']"-->
     <template v-if="!loading">
       <div
         v-for="(phrase, index) in phrases"
         :key="index"
       >
         <div v-if="phraseIsParam(phrase)" class="phrase phrase-param">
-          <input class="param" ref="params" @input="emitInput()" v-model="step.params[phrase]['value']">
+
+          <input
+            class="param"
+            ref="parameters"
+            @input="emitInput()"
+            v-model="step.arguments[getArgumentIndexForPhrase(phrase)]['value']"
+          >
         </div>
         <div v-else class="phrase">{{ phrase }}</div>
       </div>
@@ -48,7 +55,7 @@ export default {
       this.step = this.value
       await this.$store.dispatch('action/lazyLoadActions')
       // @todo ensure fallback for unknown actions (entire step should be disabled)
-      this.action = this.$store.state.action.actions.filter(ac => ac.id === this.value.action)[0]
+      this.action = this.$store.state.action.actions.filter(ac => ac.id === this.value.action.id)[0]
     },
     phraseIsParam(phrase) {
       return phrase.trim().match(/\$[a-zA-Z_]*/);
@@ -61,8 +68,13 @@ export default {
           this.focus()
         }.bind(this), 100)
       } else {
-        this.$refs.params[0].focus()
+        if (typeof this.$refs.parameters[0] !== 'undefined') {
+          this.$refs.parameters[0].focus()
+        }
       }
+    },
+    getArgumentIndexForPhrase(phrase) {
+      return this.action.parameters.filter(param => param.name === phrase)[0]['position']
     },
     emitInput() {
       this.$emit('input', this.step)
