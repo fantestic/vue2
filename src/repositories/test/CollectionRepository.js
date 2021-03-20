@@ -3,6 +3,14 @@ import rawCollections from './collections/all.js'
 const collections = rawCollections
 
 export default {
+  createCollection(collection) {
+    return new Promise(function (resolve) {
+      window.setTimeout(function () {
+        collections.push(collection)
+        resolve(collection)
+      })
+    })
+  },
   getAll() {
     return new Promise(function (resolve) {
       window.setTimeout(function () {

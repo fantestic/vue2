@@ -1,5 +1,6 @@
 import RepositoryFactory from '@/repositories/RepositoryFactory'
 
+
 const CollectionRepository = RepositoryFactory.get('collection')
 
 export default {
@@ -15,10 +16,18 @@ export default {
       commit('setCollectionsAreLoaded', true)
       commit('setCollections', collections)
     },
+    async removeCollection ({commit}, collectionId) {
+      await CollectionRepository.removeCollection(collectionId)
+      commit('removeCollection', collectionId)
+    },
     async lazyLoadCollections ({state, dispatch}) {
       if (!state.collectionsAreLoaded) {
         await dispatch('loadCollections')
       }
+    },
+    async createCollection ({commit}, collection) {
+      await CollectionRepository.createCollection(collection)
+      commit('addCollection', collection)
     }
   },
   mutations: {
@@ -27,6 +36,12 @@ export default {
     },
     setCollectionsAreLoaded (state, areLoaded) {
       state.collectionsAreLoaded = !!areLoaded
+    },
+    removeCollection(state, collectionId) {
+      state.collections = state.collections.filter(collection => collection.id !== collectionId)
+    },
+    addCollection(state, collection) {
+      state.collections.push(collection)
     }
   }
 }

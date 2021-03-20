@@ -3,7 +3,7 @@
     <h1 class="title">Create Scenario</h1>
     <template v-if="!loading">
       <vee-observer v-slot="{ valid }">
-        <vee-provider rules="required|alpha_spaces" v-slot="{ errors }">
+        <vee-provider rules="required|alpha" v-slot="{ errors }">
           <b-field label="Scenario Name" :type="{ 'is-danger': errors[0]}" :message="errors">
             <b-input v-model="readableName"></b-input>
           </b-field>
@@ -43,6 +43,7 @@ export default {
       try {
         await this.$store.dispatch('scenario/createScenario', {
           id: this.scenarioId,
+          methodName: this.readableName,
           steps: {}
         })
         Ui.reportSuccess('Scenario created')

@@ -17,6 +17,13 @@
         </div>
         <div v-else class="phrase">{{ phrase }}</div>
       </div>
+        <b-button
+          icon-right="close"
+          size="is-small"
+          class="button-delete"
+          @click="emitDelete()"
+          tabindex="-1"
+        ></b-button>
     </template>
     <b-skeleton :active="loading"></b-skeleton>
   </div>
@@ -78,6 +85,9 @@ export default {
     },
     emitInput() {
       this.$emit('input', this.step)
+    },
+    emitDelete() {
+      this.$emit('delete', this.step)
     }
   }
 }
@@ -99,5 +109,9 @@ export default {
 }
 .phrase-param {
   padding-left: 5px;
+}
+.button-delete {
+  position: absolute;
+  right: 5px;
 }
 </style>

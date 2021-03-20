@@ -11,6 +11,7 @@
     >
       <EditorStep
         v-model="scenario.steps[index]"
+        v-on:delete="deleteStep(index)"
         ref="steps"
       ></EditorStep>
     </EditorLine>
@@ -99,21 +100,36 @@ export default {
         step.arguments[i++] = {
           param: param,
           dataSource: 'text',
-          value: ''
+          value: '',
+          position: i
         }
       });
       if (position === null) {
         position = Object.keys(this.scenario.steps).length
       }
+      step.position = position
       // shift all items > position one position
       for (let i = Object.keys(this.scenario.steps).length -1; i >= position; i--) {
         this.$set(this.scenario.steps, i+1, this.scenario.steps[i])
       }
+      // Update all Position values
+      this.updateStepPositions()
       this.$set(this.scenario.steps, position, step)
       this.emitInput()
       this.$nextTick(function() {
         this.$refs.steps[this.$refs.steps.length-1].focus()
       })
+    },
+    deleteStep(index) {
+      this.$delete(this.scenario.steps, index)
+      this.updateStepPositions()
+    },
+    updateStepPositions() {
+      for (let i = 0; i < Object.keys(this.scenario.steps).length; i++) {
+        let step = _.cloneDeep(this.scenario.steps[i])
+        step.position = i
+        this.$set(this.scenario.steps[i], i, step)
+      }
     },
     onKeydown(e) {
       if (!(e.keyCode === 83 && (e.ctrlKey || e.metaKey))) {

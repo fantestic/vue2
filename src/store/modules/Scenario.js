@@ -25,7 +25,6 @@ export default {
     },
     async updateScenario ({commit}, payload) {
       await CollectionRepository.updateScenario(
-        payload.collectionId,
         _.cloneDeep(payload.scenario)
       )
       commit('updateScenario', payload.scenario)

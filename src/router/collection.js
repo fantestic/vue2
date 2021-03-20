@@ -14,6 +14,11 @@ export default [
         name: 'CollectionList',
       },
       {
+        path: 'create',
+        component: () => import(/* webpackChunkName: "collection_create" */'../views/Collection/CollectionCreate.vue'),
+        name: 'CollectionCreate',
+      },
+      {
         path: 'view/:collectionId',
         component: { render: (c) => c('router-view')},
         meta: { breadcrumb: { type: 'func', func: (route) => Collection.buildReadableNameFromId(route.params.collectionId) }},
